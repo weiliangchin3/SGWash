@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 import requests
 
-apiKey = '37fb27f535f41e235acd80ab982f43e8'
+apiKey = ''
 
 app = Flask(__name__)
 @app.route('/weatherstatus')
