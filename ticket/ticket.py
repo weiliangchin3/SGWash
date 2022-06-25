@@ -56,10 +56,10 @@ def index():
 # @app.route('/ticketID')
 # def getTicket():
 #     connection = mysql.connector.connect(
-#         host="35.192.149.80",
-#         user='root',
-#         password='root',
-#         database='sgwash',
+#         host="",
+#         user='',
+#         password='',
+#         database='',
 #     )
 #     ticketID = request.args.get('ticketID')
 #     query = "SELECT * FROM ticket WHERE tixID = '{}'".format(ticketID)
