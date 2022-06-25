@@ -1,0 +1,29 @@
+swagger: '2.0'
+info:
+  title: location verification
+  description:  API for verifying location based on postal code
+  version: 1.0.0
+host: location-verification.apigateway.sgwash.cloud.goog
+schemes:
+  - https
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+paths:
+  /validateaddress:
+    get:
+      summary: Validate address based on postal code
+      operationId: "1"
+      x-google-backend:
+        address: https://validateaddress-7w5grnntvq-uc.a.run.app/validateaddress
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Successfully validated postal code
+          schema:
+            type: string

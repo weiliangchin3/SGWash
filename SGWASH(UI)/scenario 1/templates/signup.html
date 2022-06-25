@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<style>
+    #formdesign
+    {
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+       background-image:linear-gradient(to bottom right, rgb(73, 187, 184),rgb(109, 213, 224), rgb(76, 228, 236), rgb(76, 216, 195));
+        
+        font-size:20px;
+        color:white;
+        opacity:0.88;
+        border-radius:30px;
+        width:auto;
+        
+    }
+    body {
+        background-image: url("../static/carback1.png");
+        background-position: center;
+        background-size: cover;
+        background-repeat:no-repeat;
+        
+    }
+    html{
+      
+        height: 100%;
+        width:100%; 
+    }
+</style>
+<body>
+    <div class="container pt-2 text-center">
+        <img src="../static/logo.svg" style="width: 8%;" alt="">
+    </div>
+    <div class="container" id="formdesign">
+        <div class="container">
+            <h2 class="text-center"style=" font-size:50px;">Sign up</h2>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <form method="POST"  class="needs-validation" oninput='cPass.setCustomValidity(cPass.value != pass.value ? "Passwords do not match." : "")' novalidate>
+                        <div class="row my-2 justify-content-center">
+                        <div class="col-md-3">
+                            <label for="inputName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="inputName" name="name"  required>
+                            <div class="invalid-feedback">
+                                Name is required
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputMobile" class="form-label">Mobile Number</label>
+                            <input type="text" class="form-control" id="inputMobile" name="number"  required>
+                            <div class="invalid-feedback">
+                                Mobile number is required
+                            </div>
+                        </div>
+                      
+                        </div>
+                        <div class="row my-2 justify-content-center">
+                            <div class="col-md-3">
+                                <label for="inputEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="inputEmail" name="email"  required>
+                                <div class="invalid-feedback">
+                                    Email is required
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="inputTele" class="d-inline form-label">Telegram Chat ID</label>
+                                        <button
+                                        type="button" 
+                                        data-bs-trigger="focus" 
+                                        class="btn bg-white"
+                                        data-toggle="popover" 
+                                        data-bs-placement="right" 
+                                        data-bs-html = "true"
+                                        data-bs-content="
+                                        1) Click the button below to connect to our SGWash bot on telegram 
+                                        </br></br> 2) Press the start button to generate your chat ID 
+                                        </br></br> 3) Enter the generated ID in this signup form
+                                        "
+                                        >
+                                        <img
+                                        style="width: 20px;"
+                                        src="../static/question.svg"
+                                        type="button" 
+                                        data-bs-trigger="focus" 
+                                        class="m-1" 
+                                       >
+                                        </button>
+                                       
+                                    </div>
+                                   
+                                </div>
+            
+                                    <input type="text" class="form-control" id="inputTele" name="teleID" required>
+                                    <a href="https://t.me/sgwashbot">
+                                        <p type="menu" class="btn my-1 w-40"><img style="width: 50px;" src="../static/telegram.svg" alt=""></p>
+                                    </a>
+                                    
+                                <div class="invalid-feedback">
+                                    Telegram Chat ID is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-2 justify-content-center">
+                            <div class="col-md-3">
+                                <label for="inputPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="inputPassword" name="pass"  required>
+                                <div class="invalid-feedback">
+                                    Password is required
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputCPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="inputCPassword" name="cPass"  required>
+                                <div class="invalid-feedback">
+                                    Password not matching
+                                </div>
+                            </div>
+                          
+                            </div>
+                        <div class="row justify-content-center my-2">
+                            <div class="col-md-3">
+                                <label for="inputVType" class="form-label">Vehicle Type</label>
+                                <select name="vType" id="inputVType" class="form-control">
+                                    <option value="sedan">
+                                        Sedan
+                                    </option>
+                                    <option value="coupe">Coupe</option>
+                                    <option value="van">
+                                        Van
+                                    </option>
+                                   
+                                </select>
+                                <div class="invalid-feedback">
+                                    Vehicle type is required
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="inputPlateNum" class="form-label">Car Plate Number</label>
+                                <input type="text" class="form-control" id="inputPlateNum" name="cPlate" placeholder="XXX-NNNN-X" value="SMU-2688-H" required>
+                                <div class="invalid-feedback">
+                                    Car plate number is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center py-2">
+                            <div class="col-6">
+                                <button class="btn btn-outline-info mt-4 w-100" type="submit" style="color:rgb(255, 255, 255); border-color:rgb(255, 255, 255);">Sign Up</button>
+                            </div>
+                        </div>
+                        
+                       
+                    </form>
+                    <div class="row justify-content-center py-2">
+                        <div class="col-6">
+                            <a href="/"><button class="btn btn-outline-danger w-100" style="color:white; border-color:white; ">Back</button> </a>
+                        </div>
+                    </div>
+                   
+                </div>
+               
+            </div>
+        </div>
+    </div>
+   
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+      });
+    (function () {
+        'use strict'
+      
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+      
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+          .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+      
+              form.classList.add('was-validated')
+            }, false)
+          })
+      })()
+</script>
+<!-- <script>
+    $(document).ready(function(){
+      $('[data-toggle="popover"]').popover();
+    });
+</script> -->
+</body>
+</html>

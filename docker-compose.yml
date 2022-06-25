@@ -1,0 +1,243 @@
+version: "3.8"
+
+
+volumes:
+  rabbitmq_data:
+services:
+ 
+  ###################################
+  # facebook: The facebook microservice
+  ###################################
+  socialmedia:
+    build:
+      context: ./
+      dockerfile: socialmedia/socialmedia.Dockerfile
+    image: wpchen2019/socialmedia:esd
+    restart: always
+    environment:
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5005:5005"
+
+ ####################################
+  # RabbitMQ: The messaging broker   
+  ####################################
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: esd-rabbit
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes: 
+      - rabbitmq_data:/var/lib/rabbitmq
+     
+  
+
+  #######################################################
+  # jobrequests: The jobrequests microservice
+  #######################################################
+  jobrequests:
+    build:
+      context: ./
+      dockerfile: jobrequests/jobrequests.Dockerfile
+    image: wpchen2019/jobrequests:esd
+    restart: always
+    environment:
+      dbURL: mysql+mysqlconnector://root@host.docker.internal:3306/jobrequest
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5001:5001"
+
+
+
+
+  ###############################################
+  # Job: The Job microservice
+  ###############################################
+  job:
+    build:
+      context: ./
+      dockerfile: job/job.Dockerfile
+    image: wpchen2019/job:esd
+    restart: always
+    depends_on:
+      - customer
+      - jobrequests
+      - socialmedia
+      - washer
+     
+      
+      
+    environment:
+      
+      customer_complete_URL: http://customer:5002/custcompletestatus/
+      jobcomplete_URL: http://jobrequests:5001/updatejobcomplete 
+      facebook_URL: http://socialmedia:5005/facebook
+      washercomplete_URL : http://washer:5009/washercompletestatus
+      
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5100:5100"
+
+  ##################################
+  # customer: The customer microservice
+  ##################################
+  customer:
+    build:
+      context: ./
+      dockerfile: customer/customer.Dockerfile
+    image: wpchen2019/customer:esd
+    restart: always
+    environment:
+      dbURL: mysql+mysqlconnector://root@host.docker.internal:3306/customer
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5002:5002"
+
+  
+
+
+
+  ###################################
+  # create job request: The create job request microservice
+  ###################################
+  createrequest:
+    build:
+      context: ./
+      dockerfile: createrequest/createrequest.Dockerfile
+    image: wpchen2019/createrequest:esd
+    restart: always
+    depends_on:
+      - rabbitmq
+      
+    environment:
+      dbURL: mysql+mysqlconnector://root@host.docker.internal:3306/jobrequest
+      
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      PYTHONUNBUFFERED: 1
+
+
+  ###############################################
+  # Request: The Request microservice
+  ###############################################
+  request:
+    build:
+      context: ./
+      dockerfile: request/request.Dockerfile
+    image: wpchen2019/request:esd
+    restart: always
+    depends_on:
+      - customer
+      - createrequest
+      - rabbitmq
+    environment:
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      createcuststatus_URL: http://customer:5002/updatecuststatus
+
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5200:5200"
+ 
+
+
+
+  ##################################
+  # washer: The customer microservice
+  ##################################
+  washer:
+    build:
+      context: ./
+      dockerfile: washer/washer.Dockerfile
+    image: wpchen2019/washer:esd
+    restart: always
+    environment:
+      dbURL: mysql+mysqlconnector://root@host.docker.internal:3306/washer
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5009:5009"
+
+  
+
+  ###############################################
+  # AcceptRequest: The AcceptRequest microservice
+  ###############################################
+  acceptrequest:
+    build:
+      context: ./
+      dockerfile: acceptrequest/acceptrequest.Dockerfile
+    image: wpchen2019/acceptrequest:esd
+    restart: always
+    depends_on:
+      - customer
+      - jobrequests
+      
+      - washer
+      
+    environment:
+     
+
+      acceptrequest_URL: http://jobrequests:5001/updaterequeststatus/
+      washeraccept_URL: http://washer:5009/washeracceptstatus/
+      cust_accept_status_URL: http://customer:5002/custacceptstatus/
+     
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5211:5211"
+
+
+
+
+
+  ###################################
+  # create invoicereq request: The create invoicereq request microservice
+  ###################################
+  invoicereq:
+    build:
+      context: ./
+      dockerfile: invoicereq/invoicereq.Dockerfile
+    image: wpchen2019/invoicereq:esd
+    restart: always
+    depends_on:
+      - rabbitmq
+      
+    environment:
+      #invoice_URL: http://app:5900/invoice
+      
+      
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      PYTHONUNBUFFERED: 1
+
+  ###################################
+  # telegramcreate Cust: The telegramcreate Cust microservice
+  ###################################
+  telecreatecust:
+    build:
+      context: ./
+      dockerfile: telecreatecust/telecreatecust.Dockerfile
+    image: wpchen2019/telecreatecust:esd
+    restart: always
+    environment:
+      PYTHONUNBUFFERED: 1
+    
+
+
+
+
+  ##################################
+  # ticket: The customer microservice
+  ##################################
+  ticket:
+    build:
+      context: ./
+      dockerfile: ticket/ticket.Dockerfile
+    image: wpchen2019/ticket:esd
+    restart: always
+    environment:
+     
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5990:5990"

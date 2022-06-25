@@ -1,0 +1,29 @@
+swagger: '2.0'
+info:
+  title: ocr
+  description: OCR API for retrieving car plate number from image
+  version: 1.0.0
+host: ocr.apigateway.sgwash.cloud.goog
+schemes:
+  - https
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+paths:
+  /ocr:
+    post:
+      summary: get car plate number from image
+      operationId: "1"
+      x-google-backend:
+        address: https://ocr-7w5grnntvq-uc.a.run.app/getplatenum
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Successfully retrieve car plate number from image
+          schema:
+            type: string

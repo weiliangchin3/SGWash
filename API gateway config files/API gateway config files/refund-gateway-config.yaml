@@ -1,0 +1,29 @@
+swagger: '2.0'
+info:
+  title: refund
+  description: Refund API for processing refund
+  version: 1.0.0
+host: refund.apigateway.sgwash.cloud.goog
+schemes:
+  - https
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+paths:
+  /refund:
+    post:
+      summary: process refund with stripe
+      operationId: "2"
+      x-google-backend:
+        address: https://refund-7w5grnntvq-uc.a.run.app/refund
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Refund successful
+          schema:
+            type: string

@@ -1,0 +1,42 @@
+swagger: '2.0'
+info:
+  title: image
+  description: Image API for retrieving image URL and uploading image to Firebase storage
+  version: 1.0.0
+host: image.apigateway.sgwash.cloud.goog
+schemes:
+  - https
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+paths:
+  /getimgurl:
+    get:
+      summary: get customer image URL
+      operationId: "1"
+      x-google-backend:
+        address: https://image-7w5grnntvq-uc.a.run.app/customerimg
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Successfully retrieve image URL
+          schema:
+            type: string
+  /uploadimg:
+    post:
+      summary: upload image to Firebase storage
+      operationId: "2"
+      x-google-backend:
+        address: https://image-7w5grnntvq-uc.a.run.app/upload
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Image successfully uploaded
+          schema:
+            type: string

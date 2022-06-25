@@ -1,0 +1,56 @@
+swagger: '2.0'
+info:
+  title: weather
+  description: Telegram API for sending to washer and users
+  version: 1.0.0
+host: notification.apigateway.sgwash.cloud.goog
+schemes:
+  - https
+produces:
+  - application/json
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
+paths:
+  /washers:
+    post:
+      summary: notify job request to all washers
+      operationId: "1"
+      x-google-backend:
+        address: https://notifications-7w5grnntvq-uc.a.run.app/notifywashers
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+  /customer:
+    post:
+      summary: notify customer of accepted job request
+      operationId: "2"
+      x-google-backend:
+        address: https://notifications-7w5grnntvq-uc.a.run.app/notifycustomer
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+  /customercomplete:
+    post:
+      summary: notify customer of completed job request
+      operationId: "3"
+      x-google-backend:
+        address: https://notifications-7w5grnntvq-uc.a.run.app/notifycomplete
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: success
+          schema:
+            type: string
+    
