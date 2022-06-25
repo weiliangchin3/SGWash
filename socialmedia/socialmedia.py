@@ -13,11 +13,11 @@ import time
 
 app = Flask(__name__)
 CORS(app)
-access_token = "EAAE0M7L8LAMBALDioi1TxDrZBUYXmWvYZBADLW8vPZBMGUlqhYrBsHMCEXFiwLCFlxH07p2zqZA7XlBvvvk8gIsLWfpFstDRQJzfqDlB7WHFwnHiobGlkdHi2fIZCuNmG1Wajhi6mOKqZB7iD5udZAyQ5YXECZA8KYqvZC9RKplZC7hJeYSqNtL68rZC2VlygQvIBkZD"
+access_token = ""
 
 #user_access_token = 'USER_ACCESS_TOKEN' # initially generated client-side
-app_id = '338871627557891' # found at developer.facebook.com
-app_secret = 'ad1d164b6e26a86a2dd81d70d837e4fb' # found at developer.facebook.com
+app_id = '' # found at developer.facebook.com
+app_secret = '' # found at developer.facebook.com
 
 # Create fb graph object
 fbgraphobj = fb.GraphAPI(access_token)
