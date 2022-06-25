@@ -9,7 +9,7 @@ import requests
 
 app = Flask(__name__)
 CORS(app)
-TOKEN = "1553493079:AAF5hdEIFUWRQTZliV2kktls-vgmr6-XhfY"
+TOKEN = ""
 
 bot = telebot.TeleBot(TOKEN)
 # invoke book microservice to get all books
